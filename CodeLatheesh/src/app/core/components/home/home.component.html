@@ -3,96 +3,85 @@
   <!-- Page Title -->
   <h2 class="text-center mb-4">Personal Finance Dashboard</h2>
 
-  <!-- Summary Section -->
-  <div class="row g-4 text-center">
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 bg-light">
-        <div class="card-body">
-          <h6 class="text-muted">Total Income</h6>
-          <h4 class="text-success">₹ {{ totalIncome }}</h4>
+  <!-- Row 1: Summary Cards + Pie Chart -->
+  <div class="row g-4 align-items-stretch">
+    
+    <!-- Summary Cards (col-md-9) -->
+    <div class="col-md-9">
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-3" *ngFor="let card of summaryCards">
+          <div class="card shadow-sm border-0 bg-light h-100">
+            <div class="card-body text-center">
+              <h6 class="text-muted">{{ card.label }}</h6>
+              <h4 [ngClass]="card.colorClass">₹ {{ card.value }}</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 bg-light">
-        <div class="card-body">
-          <h6 class="text-muted">Total Expense</h6>
-          <h4 class="text-danger">₹ {{ totalExpense }}</h4>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 bg-light">
-        <div class="card-body">
-          <h6 class="text-muted">Balance</h6>
-          <h4 class="text-primary">₹ {{ balance }}</h4>
+
+    <!-- Pie Chart (col-md-3) -->
+    <div class="col-md-3 d-flex justify-content-center">
+      <div class="card shadow-sm w-100">
+        <div class="card-body text-center">
+          <h6 class="card-title">Transactions</h6>
+          <div style="position: relative; height: 200px; width: 200px; margin: auto;">
+            <canvas baseChart 
+                    [type]="'doughnut'" 
+                    [data]="pieChartData"
+                    [options]="pieChartOptions">
+            </canvas>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Charts Section -->
-  <div class="row mt-5 g-4">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Spending by Category</h5>
-        <canvas baseChart 
-                [type]="'doughnut'" 
-                [data]="pieChartData">
-        </canvas>
+  <!-- Row 2: Top Expenses Table + Bar Chart -->
+  <div class="row g-4 mt-4">
+
+    <!-- Top Expenses Table -->
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Top Expenses</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tx of topExpenses">
+                  <td>{{ tx.name }}</td>
+                  <td>₹ {{ tx.amount }}</td>
+                </tr>
+                <tr *ngIf="topExpenses.length === 0">
+                  <td colspan="2" class="text-center text-muted">No recent transactions</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Income vs Expense</h5>
-        <canvas baseChart 
-                [type]="'bar'" 
-                [data]="barChartData" 
-                [options]="barChartOptions">
-        </canvas>
+    <!-- Bar Chart -->
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-center">Top Expenses Chart</h5>
+          <canvas baseChart
+                  [type]="'bar'"
+                  [data]="barChartData"
+                  [options]="barChartOptions">
+          </canvas>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-
-  <!-- Recent Transactions -->
-  <div class="card mt-5 shadow-sm">
-    <div class="card-body">
-      <h5 class="card-title mb-3">Recent Transactions</h5>
-      <div class="table-responsive">
-        <table class="table table-hover align-middle">
-          <thead class="table-light">
-            <tr>
-              <th>Date</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let tx of recentTransactions">
-              <td>{{ tx.date | date: 'dd-MM-yyyy' }}</td>
-              <td>{{ tx.category }}</td>
-              <td>₹ {{ tx.amount }}</td>
-              <td>
-                <span class="badge px-3 py-2" 
-                      [ngClass]="tx.type === 'Income' ? 'bg-success' : 'bg-danger'">
-                  {{ tx.type }}
-                </span>
-              </td>
-            </tr>
-            <tr *ngIf="recentTransactions.length === 0">
-              <td colspan="4" class="text-center text-muted">No recent transactions</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
 
 </div>

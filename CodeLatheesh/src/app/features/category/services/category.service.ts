@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Category } from '../models/category.model';
 import { environment } from '../../../../environments/environment';
 import { EditCategoryRequest } from '../models/edit-category-request.model';
+import { UserSummary } from '../models/user-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,12 @@ export class CategoryService {
   {
     return this.http.delete<Category>(`${environment.apiBaseUrl}/api/categories/${id}`);
   }
+
+  getUserSummary(userId:Number):Observable<UserSummary>
+  {
+    return this.http.get<UserSummary>(`${environment.apiBaseUrl}/api/categories/usersummary/${userId}`);
+  }
+
+  
   
 }
