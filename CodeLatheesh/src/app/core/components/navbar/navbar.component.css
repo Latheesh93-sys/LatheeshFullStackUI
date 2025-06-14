@@ -1,0 +1,36 @@
+.logout {
+  padding: 6px 12px;
+  border-radius: 5px;
+  background-color: #dc3545; /* Bootstrap's danger color */
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: #c82333;
+}
+.custom-brand {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+.custom-link {
+  font-weight: 500;
+  color: #444;
+  padding: 6px 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-link:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.custom-active-link {
+  color: #0d6efd !important;
+  font-weight: 600;
+  border-bottom: 3px solid #0d6efd;
+  background-color: #e7f1ff;
+  border-radius: 4px;
+}

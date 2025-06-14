@@ -18,9 +18,9 @@ export class CategoryService {
     return this.http.post<void>(`${environment.apiBaseUrl}/api/categories`,model);
   }
 
-  getAllCategories():Observable<Category[]>
+  getAllCategories(userId:Number):Observable<Category[]>
   {
-    return this.http.get<Category[]>(`${environment.apiBaseUrl}/api/categories`);
+    return this.http.get<Category[]>(`${environment.apiBaseUrl}/api/categories/${userId}`);
   }
 
   getCategoryById(id:string):Observable<Category>

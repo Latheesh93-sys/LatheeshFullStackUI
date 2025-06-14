@@ -1,20 +1,58 @@
 <div class="container">
-    <h1 class="mt-3">
-        Add Category
-    </h1>
-    <form (ngSubmit)="onFormSubmit()">
-        <div class="mt-2">
-            <div class="mt-3">
-                <label class="form-label">Category Name</label>
-                <input type="text" id="categoryName" name="categoryName" class="form-control" [(ngModel)]="model.name">
-            </div>
-            <div class="mt-3">
-                <label class="form-label">Category Url Handle</label>
-                <input type="text" id="categoryUrlHandle" name="categoryUrlHandle" class="form-control" [(ngModel)]="model.urlHandle">
-            </div>
-            <div class="mt-3">
-                <button class="btn btn-primary" type="submit">Save</button>
-            </div>
-        </div>
-    </form>
+  <h1 class="mt-3">Add Transaction</h1>
+
+  <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+    <div class="mt-2">
+      <!-- Name -->
+      <div class="mt-3">
+        <label class="form-label">Name</label>
+        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="model.name" required #nameField="ngModel">
+        <div class="text-danger" *ngIf="nameField.invalid && nameField.touched">Name is required</div>
+      </div>
+
+      <!-- Amount -->
+      <div class="mt-3">
+        <label class="form-label">Amount</label>
+        <input type="number" id="amount" name="amount" class="form-control" [(ngModel)]="model.amount" required #amountField="ngModel">
+        <div class="text-danger" *ngIf="amountField.invalid && amountField.touched">Amount is required</div>
+      </div>
+
+      <!-- Date -->
+      <div class="mt-3">
+        <label class="form-label">Date</label>
+        <input type="date" id="date" name="date" class="form-control" [(ngModel)]="model.date" required #dateField="ngModel">
+        <div class="text-danger" *ngIf="dateField.invalid && dateField.touched">Date is required</div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="mt-3">
+        <label class="form-label">Payment Method</label>
+        <select class="form-select" id="paymentMethod" name="paymentMethod" [(ngModel)]="model.paymentMethod" required #paymentMethodField="ngModel">
+          <option value="">Select Method</option>
+          <option value="Cash">Cash</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="UPI">UPI</option>
+        </select>
+        <div class="text-danger" *ngIf="paymentMethodField.invalid && paymentMethodField.touched">Payment method is required</div>
+      </div>
+
+      <!-- Type -->
+      <div class="mt-3">
+        <label class="form-label">Type</label>
+        <select class="form-select" id="type" name="type" [(ngModel)]="model.type" required #typeField="ngModel">
+          <option value="">Select Type</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+        <div class="text-danger" *ngIf="typeField.invalid && typeField.touched">Type is required</div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-4">
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Save</button>
+      </div>
+    </div>
+  </form>
 </div>
+

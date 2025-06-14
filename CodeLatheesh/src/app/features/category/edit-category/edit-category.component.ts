@@ -19,7 +19,10 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
    editCategorySubscription?:Subscription;
    id:string|null= null;
    category?:Category;
-
+  ConvertToISOdate(dateStr:string):string{
+    const[dd,mm,yyyy]=dateStr.split('-');
+    return `${yyyy}-${mm}-${dd}`;
+  }
    constructor(private route:ActivatedRoute,private categoryService:CategoryService,
     private router : Router){
 
@@ -34,6 +37,7 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
               {
                 next:(response)=>{
                   this.category=response;
+                  this.category.date=this.ConvertToISOdate(this.category.date)
                 }
               }
             )
@@ -44,7 +48,11 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
    onFormSubmit():void{
     const updateCategoryRequest: EditCategoryRequest = {
       name: this.category?.name ?? '',
-      urlHandle: this.category?.urlHandle ?? ''
+      userId: Number(localStorage.getItem('userid')),
+      amount: this.category?.amount ?? 0,
+      date: this.category?.date ?? '',
+      paymentMethod: this.category?.paymentMethod ?? '',
+      type: this.category?.type ?? ''
     };
 
       if(this.id)
@@ -68,6 +76,7 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
         })
       }
    }
+   
    ngOnDestroy(): void {
      this.paramsSubscription?.unsubscribe();
      this.editCategorySubscription?.unsubscribe();

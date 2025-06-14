@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AddCategoryRequest } from '../models/add-category-request.model';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from '../services/category.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
-  imports: [FormsModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css'
 })
@@ -18,9 +19,13 @@ export class AddCategoryComponent implements OnDestroy {
   private addCategorySubscription?: Subscription
   constructor(private categoryService: CategoryService,private router:Router) {
     this.model = {
-      name: '',
-      urlHandle: ''
-    };
+  name: '',
+  userId: Number(localStorage.getItem('userid')),
+  amount: 0,
+  date: '',
+  paymentMethod: '',
+  type: ''
+};
   }
   onFormSubmit() {
     this.addCategorySubscription=this.categoryService.addCategory(this.model).subscribe({
