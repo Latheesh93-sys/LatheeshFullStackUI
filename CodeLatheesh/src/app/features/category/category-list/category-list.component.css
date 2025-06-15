@@ -1,0 +1,7 @@
+.table-wrapper {
+  max-height: 400px; /* adjust height as needed */
+  overflow-y: auto;
+}
+.table-wrapper table {
+  margin-bottom: 0;
+}

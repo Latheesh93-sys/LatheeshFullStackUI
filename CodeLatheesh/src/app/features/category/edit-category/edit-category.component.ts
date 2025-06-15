@@ -6,6 +6,7 @@ import { Category } from '../models/category.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EditCategoryRequest } from '../models/edit-category-request.model';
+import { IsoDatePipe } from '../../../pipes/iso-date.pipe';
 
 @Component({
   selector: 'app-edit-category',
@@ -19,10 +20,6 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
    editCategorySubscription?:Subscription;
    id:string|null= null;
    category?:Category;
-  ConvertToISOdate(dateStr:string):string{
-    const[dd,mm,yyyy]=dateStr.split('-');
-    return `${yyyy}-${mm}-${dd}`;
-  }
    constructor(private route:ActivatedRoute,private categoryService:CategoryService,
     private router : Router){
 
@@ -37,7 +34,8 @@ export class EditCategoryComponent implements OnInit,OnDestroy {
               {
                 next:(response)=>{
                   this.category=response;
-                  this.category.date=this.ConvertToISOdate(this.category.date)
+                  const pipe = new IsoDatePipe();
+                  this.category.date = pipe.transform(this.category.date);
                 }
               }
             )

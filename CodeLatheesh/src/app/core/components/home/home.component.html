@@ -51,12 +51,14 @@
                 <tr>
                   <th>Name</th>
                   <th>Amount</th>
+                  <th>Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let tx of topExpenses">
                   <td>{{ tx.name }}</td>
                   <td>₹ {{ tx.amount }}</td>
+                  <td>{{tx.date | isoDate}}</td>
                 </tr>
                 <tr *ngIf="topExpenses.length === 0">
                   <td colspan="2" class="text-center text-muted">No recent transactions</td>

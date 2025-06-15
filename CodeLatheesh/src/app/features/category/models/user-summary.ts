@@ -10,4 +10,5 @@ export interface CategoryColl {
   id: string;
   name: string;
   amount: number;
+  date:string;
 }

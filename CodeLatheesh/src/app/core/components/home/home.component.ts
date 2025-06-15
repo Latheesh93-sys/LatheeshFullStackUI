@@ -5,11 +5,12 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { CategoryService } from '../../../features/category/services/category.service';
 import { CategoryColl, UserSummary } from '../../../features/category/models/user-summary';
 import { ToastrService } from 'ngx-toastr';
+import { IsoDatePipe } from '../../../pipes/iso-date.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective,IsoDatePipe],
   providers: [provideCharts(withDefaultRegisterables())],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
