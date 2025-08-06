@@ -2,6 +2,14 @@
 
   <!-- Page Title -->
   <h2 class="text-center mb-4">Personal Finance Dashboard</h2>
+   <div class="mb-3">
+    <label for="monthSelect" class="form-label">Select Month : </label>&nbsp;
+  <select id="monthSelect" (change)="onMonthChange($event)">
+    <option *ngFor="let m of months; let i = index" [value]="i + 1" [selected]="(i + 1) === defaultMonth">
+      {{ m }}
+    </option>
+  </select>
+   </div>
 
   <!-- Row 1: Summary Cards + Pie Chart -->
   <div class="row g-4 align-items-stretch">

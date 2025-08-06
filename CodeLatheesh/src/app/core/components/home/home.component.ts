@@ -17,6 +17,11 @@ import { IsoDatePipe } from '../../../pipes/iso-date.pipe';
 })
 export class HomeComponent {
   topExpenses: CategoryColl[] = [];
+  months: string[] = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+  defaultMonth:number = new Date().getMonth() + 1;
   totalIncome: number = 0;
   totalExpense: number = 0;
   totalInvestment: number = 0;
@@ -56,9 +61,17 @@ export class HomeComponent {
   constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
-    const userId = Number(localStorage.getItem('userid'));
-
-    this.categoryService.getUserSummary(userId).subscribe({
+    
+this.loadData();
+    
+  }
+  onMonthChange(event: Event) {
+  this.defaultMonth = parseInt((event.target as HTMLSelectElement).value, 10);
+  this.loadData();
+}
+loadData(){
+  const userId = Number(localStorage.getItem('userid'));
+this.categoryService.getUserSummary(userId,this.defaultMonth).subscribe({
       next: (summary: UserSummary) => {
         this.totalIncome = summary.totalIncome;
         this.totalExpense = summary.totalExpense;
@@ -74,8 +87,7 @@ export class HomeComponent {
         this.toastr.error('User data loading failed');
       }
     });
-  }
-
+}
   SetSummaryCards(): void {
     this.summaryCards = [
       { label: 'Total Income', value: this.totalIncome, colorClass: 'text-success' },

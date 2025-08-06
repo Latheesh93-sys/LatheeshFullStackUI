@@ -39,9 +39,9 @@ export class CategoryService {
     return this.http.delete<Category>(`${environment.apiBaseUrl}/api/categories/${id}`);
   }
 
-  getUserSummary(userId:Number):Observable<UserSummary>
+  getUserSummary(userId:number,month:number):Observable<UserSummary>
   {
-    return this.http.get<UserSummary>(`${environment.apiBaseUrl}/api/categories/usersummary/${userId}`);
+    return this.http.get<UserSummary>(`${environment.apiBaseUrl}/api/categories/usersummary/${userId}/${month}`);
   }
 
   getFilteredCategories(
