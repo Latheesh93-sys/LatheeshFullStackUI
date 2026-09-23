@@ -3,9 +3,9 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { LoginComponent } from './login/login/login.component';
 import { HomeComponent } from './core/components/home/home.component';
-import { CategoryListComponent } from './features/category/category-list/category-list.component';
-import { AddCategoryComponent } from './features/category/add-category/add-category.component';
-import { EditCategoryComponent } from './features/category/edit-category/edit-category.component';
+import { TransactionListComponent } from './features/transaction/transaction-list/transaction-list.component';
+import { AddTransactionComponent } from './features/transaction/add-transaction/add-transaction.component';
+import { EditTransactionComponent } from './features/transaction/edit-transaction/edit-transaction.component';
 
 
 
@@ -31,9 +31,9 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: 'admin/Home', loadComponent: () => import('./core/components/home/home.component').then(m => m.HomeComponent) },
-      { path: 'admin/categories', loadComponent: () => import('./features/category/category-list/category-list.component').then(m => m.CategoryListComponent) },
-      { path: 'admin/categories/add', loadComponent: () => import('./features/category/add-category/add-category.component').then(m => m.AddCategoryComponent) },
-      { path: 'admin/categories/:id', loadComponent: () => import('./features/category/edit-category/edit-category.component').then(m => m.EditCategoryComponent)},
+      { path: 'admin/transactions', loadComponent: () => import('./features/transaction/transaction-list/transaction-list.component').then(m => m.TransactionListComponent) },
+      { path: 'admin/transactions/add', loadComponent: () => import('./features/transaction/add-transaction/add-transaction.component').then(m => m.AddTransactionComponent) },
+      { path: 'admin/transactions/:id', loadComponent: () => import('./features/transaction/edit-transaction/edit-transaction.component').then(m => m.EditTransactionComponent)},
       // add more main app routes here
     ]
   },

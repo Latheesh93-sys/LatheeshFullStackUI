@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import { CategoryService } from '../services/category.service';
-import { Category } from '../models/category.model';
+import { TransactionService } from '../services/transaction.service';
+import { Transaction } from '../models/transaction.model';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-category-list',
+  selector: 'app-transaction-list',
   imports: [RouterModule,CommonModule,FormsModule],
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  templateUrl: './transaction-list.component.html',
+  styleUrl: './transaction-list.component.css'
 })
-export class CategoryListComponent implements OnInit {
+export class TransactionListComponent implements OnInit {
 
-  categories: Category[] = [];
+  transactions: Transaction[] = [];
   totalCount = 0;
   months: string[] = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -34,15 +34,15 @@ export class CategoryListComponent implements OnInit {
   };
    
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private transactionService: TransactionService) {
   }
   ngOnInit(): void {
     this.loadData();
   }
   loadData() {
     const userId = Number(localStorage.getItem('userid'));
-    this.categoryService.getFilteredCategories(userId, this.filter).subscribe((res) => {
-      this.categories = res.items;
+    this.transactionService.getFilteredTransactions(userId, this.filter).subscribe((res) => {
+      this.transactions = res.items;
       this.totalCount = res.totalCount;
     });
   }

@@ -3,7 +3,7 @@
 
   <!-- Add Transaction Button -->
   <div class="d-flex justify-content-end mt-3">
-    <a class="btn btn-primary" [routerLink]="['/admin/categories/add']">Add Transaction</a>
+    <a class="btn btn-primary" [routerLink]="['/admin/transactions/add']">Add Transaction</a>
   </div>
 
  <div class="row mt-3">
@@ -58,7 +58,7 @@
   
 
   <!-- Transaction Table -->
-  <div *ngIf="categories">
+  <div *ngIf="transactions">
     <div class="table-wrapper">
 <table class="table table-bordered mt-3">
       <thead>
@@ -72,17 +72,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categories">
-          <td>{{ category.name }}</td>
-          <td>{{ category.type }}</td>
-          <td>{{ category.amount | currency:'INR':'symbol':'1.2-2' }}</td>
-          <td>{{ category.date | date: 'dd-MM-yyyy' }}</td>
-          <td>{{ category.paymentMethod }}</td>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.name }}</td>
+          <td>{{ transaction.type }}</td>
+          <td>{{ transaction.amount | currency:'INR':'symbol':'1.2-2' }}</td>
+          <td>{{ transaction.date | date: 'dd-MM-yyyy' }}</td>
+          <td>{{ transaction.paymentMethod }}</td>
           <td>
-            <a class="btn btn-sm btn-light" [routerLink]="['/admin/categories', category.id]">Edit</a>
+            <a class="btn btn-sm btn-light" [routerLink]="['/admin/transactions', transaction.id]">Edit</a>
           </td>
         </tr>
-        <tr *ngIf="categories.length === 0">
+        <tr *ngIf="transactions.length === 0">
             <td colspan="6" class="text-center text-muted"><b>No recent transactions</b></td>
         </tr>
       </tbody>
@@ -101,7 +101,7 @@
       <span>Page {{ filter.pageNumber }}</span>
 
       <button class="btn btn-outline-primary"
-              [disabled]="categories.length < filter.pageSize"
+              [disabled]="transactions.length < filter.pageSize"
               (click)="onPageChange(filter.pageNumber + 1)">
         Next
       </button>

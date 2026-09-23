@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { CategoryService } from '../../../features/category/services/category.service';
-import { CategoryColl, UserSummary } from '../../../features/category/models/user-summary';
+import { TransactionService } from '../../../features/transaction/services/transaction.service';
+import { TransactionColl, UserSummary } from '../../../features/transaction/models/user-summary';
 import { ToastrService } from 'ngx-toastr';
 import { IsoDatePipe } from '../../../pipes/iso-date.pipe';
 
@@ -16,13 +16,14 @@ import { IsoDatePipe } from '../../../pipes/iso-date.pipe';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  topExpenses: CategoryColl[] = [];
+  topExpenses: TransactionColl[] = [];
   months: string[] = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
   defaultMonth:number = new Date().getMonth() + 1;
   totalIncome: number = 0;
+  currentBalance:number=0;
   totalExpense: number = 0;
   totalInvestment: number = 0;
   balance: number = 0;
@@ -58,7 +59,7 @@ export class HomeComponent {
     }
   };
 
-  constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
+  constructor(private transactionService: TransactionService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     
@@ -71,12 +72,13 @@ this.loadData();
 }
 loadData(){
   const userId = Number(localStorage.getItem('userid'));
-this.categoryService.getUserSummary(userId,this.defaultMonth).subscribe({
+this.transactionService.getUserSummary(userId,this.defaultMonth).subscribe({
       next: (summary: UserSummary) => {
         this.totalIncome = summary.totalIncome;
+        this.currentBalance=summary.currentBalance;
         this.totalExpense = summary.totalExpense;
         this.totalInvestment = summary.totalInvestment;
-        this.balance = this.totalIncome - (this.totalExpense + this.totalInvestment);
+        this.balance = summary.currentBalance - (this.totalExpense + this.totalInvestment);
         this.topExpenses = summary.topExpenses;
 
         this.SetSummaryCards();
@@ -90,7 +92,7 @@ this.categoryService.getUserSummary(userId,this.defaultMonth).subscribe({
 }
   SetSummaryCards(): void {
     this.summaryCards = [
-      { label: 'Total Income', value: this.totalIncome, colorClass: 'text-success' },
+      { label: 'Income this month', value: this.totalIncome, colorClass: 'text-success' },
       { label: 'Total Expense', value: this.totalExpense, colorClass: 'text-danger' },
       { label: 'Total Investment', value: this.totalInvestment, colorClass: 'text-info' },
       { label: 'Balance', value: this.balance, colorClass: 'text-primary' }

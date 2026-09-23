@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AddCategoryRequest } from '../models/add-category-request.model';
+import { AddTransactionRequest } from '../models/add-transaction-request.model';
 import { HttpClient,HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Category } from '../models/category.model';
+import { Transaction } from '../models/transaction.model';
 import { environment } from '../../../../environments/environment';
-import { EditCategoryRequest } from '../models/edit-category-request.model';
+import { EditTransactionRequest } from '../models/edit-transaction-request.model';
 import { UserSummary } from '../models/user-summary';
 
 export interface PaginatedResult<T> {
@@ -15,36 +15,36 @@ export interface PaginatedResult<T> {
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class TransactionService {
 
   constructor(private http:HttpClient) {}
 
-  addCategory(model:AddCategoryRequest):Observable<void>
+  addTransaction(model:AddTransactionRequest):Observable<void>
   {
-    return this.http.post<void>(`${environment.apiBaseUrl}/api/categories`,model);
+    return this.http.post<void>(`${environment.apiBaseUrl}/api/transactions`,model);
   }
 
-  getCategoryById(id:string):Observable<Category>
+  getTransactionById(id:string):Observable<Transaction>
   {
-    return this.http.get<Category>(`${environment.apiBaseUrl}/api/categories/${id}`);
+    return this.http.get<Transaction>(`${environment.apiBaseUrl}/api/transactions/${id}`);
   }
 
-  editCategory(id:string,editCategoryRequest:EditCategoryRequest):Observable<Category>
+  editTransaction(id:string,editTransactionRequest:EditTransactionRequest):Observable<Transaction>
   {
-    return this.http.put<Category>(`${environment.apiBaseUrl}/api/categories/${id}`,editCategoryRequest);
+    return this.http.put<Transaction>(`${environment.apiBaseUrl}/api/transactions/${id}`,editTransactionRequest);
   }
 
-  deleteCategory(id:string):Observable<Category>
+  deleteTransaction(id:string):Observable<Transaction>
   {
-    return this.http.delete<Category>(`${environment.apiBaseUrl}/api/categories/${id}`);
+    return this.http.delete<Transaction>(`${environment.apiBaseUrl}/api/transactions/${id}`);
   }
 
   getUserSummary(userId:number,month:number):Observable<UserSummary>
   {
-    return this.http.get<UserSummary>(`${environment.apiBaseUrl}/api/categories/usersummary/${userId}/${month}`);
+    return this.http.get<UserSummary>(`${environment.apiBaseUrl}/api/transactions/usersummary/${userId}/${month}`);
   }
 
-  getFilteredCategories(
+  getFilteredTransactions(
     userId: number,
     filters: {
       month?: number;
@@ -55,7 +55,7 @@ export class CategoryService {
       pageNumber?: number;
       pageSize?: number;
     }
-  ): Observable<PaginatedResult<Category>> {
+  ): Observable<PaginatedResult<Transaction>> {
     let params = new HttpParams().set('userId', userId.toString());
 
     if (filters.month !== undefined) {
@@ -80,7 +80,7 @@ export class CategoryService {
       params = params.set('pageSize', filters.pageSize.toString());
     }
 
-    return this.http.get<PaginatedResult<Category>>(`${environment.apiBaseUrl}/api/categories/filtered`, { params });
+    return this.http.get<PaginatedResult<Transaction>>(`${environment.apiBaseUrl}/api/transactions/filtered`, { params });
   }
 
   

@@ -1,5 +1,4 @@
-export interface AddCategoryRequest
-{
+export interface EditTransactionRequest{
   name: string;
   userId: number;
   amount: number;

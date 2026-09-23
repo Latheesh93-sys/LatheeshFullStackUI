@@ -1,4 +1,4 @@
-export interface Category{
+export interface Transaction{
     id:string;
     name: string;
     userId: number;

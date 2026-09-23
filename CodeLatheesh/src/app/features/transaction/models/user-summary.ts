@@ -1,12 +1,13 @@
 export interface UserSummary {
-    totalIncome: number;
+  totalIncome: number;
   totalExpense: number;
   totalInvestment: number;
-  topExpenses: CategoryColl[];
+  currentBalance:number;
+  topExpenses: TransactionColl[];
 
 }
 
-export interface CategoryColl {
+export interface TransactionColl {
   id: string;
   name: string;
   amount: number;
