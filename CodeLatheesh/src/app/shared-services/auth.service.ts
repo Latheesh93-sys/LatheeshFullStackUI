@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private tokenKey = 'token';
+  private apiUrl = `${environment.apiUrl}/Auth`;
   constructor(private http: HttpClient) {}
 
+
+
   login(username: string, password: string) {
-    return this.http.post<{ token: string }>('https://localhost:7004/api/Auth/login', {
+    return this.http.post<{ token: string }>('${environment.apiBaseUrl}/api/Auth/login', {
       username,
       password
     });
   }
 register(username: string, password: string,firstname:string,lastname:string,email:string) {
-    return this.http.post<{ token: string }>('https://localhost:7004/api/Auth/register', {
+    return this.http.post<{ token: string }>('${environment.apiBaseUrl}/api/Auth/register', {
       username,
       password,
       firstname,
