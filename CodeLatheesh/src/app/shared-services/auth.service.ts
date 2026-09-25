@@ -7,19 +7,19 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   private tokenKey = 'token';
-  private apiUrl = `${environment.apiBaseUrl}/Auth`;
+  private authUrl = `${environment.apiBaseUrl}/api/Auth`;
   constructor(private http: HttpClient) {}
 
 
 
   login(username: string, password: string) {
-    return this.http.post<{ token: string }>('${environment.apiBaseUrl}/api/Auth/login', {
+    return this.http.post<{ token: string }>(`${this.authUrl}/login`, {
       username,
       password
     });
   }
 register(username: string, password: string,firstname:string,lastname:string,email:string) {
-    return this.http.post<{ token: string }>('/api/Auth/register', {
+    return this.http.post<{ token: string }>(`${this.authUrl}/register`, {
       username,
       password,
       firstname,
