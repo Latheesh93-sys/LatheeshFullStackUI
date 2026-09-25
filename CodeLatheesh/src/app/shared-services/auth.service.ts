@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private tokenKey = 'token';
-  private apiUrl = `${environment.apiUrl}/Auth`;
+  private apiUrl = `${environment.apiBaseUrl}/Auth`;
   constructor(private http: HttpClient) {}
 
 
@@ -19,7 +19,7 @@ export class AuthService {
     });
   }
 register(username: string, password: string,firstname:string,lastname:string,email:string) {
-    return this.http.post<{ token: string }>('${environment.apiBaseUrl}/api/Auth/register', {
+    return this.http.post<{ token: string }>('/api/Auth/register', {
       username,
       password,
       firstname,
