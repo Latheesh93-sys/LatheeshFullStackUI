@@ -1,4 +1,3 @@
 export const environment = {
-    production: false,
-    apiBaseUrl:'https://localhost:7004'
+    apiBaseUrl:'https://personalfinancetracker-fjewfye4g7fjdqcn.centralindia-01.azurewebsites.net'
 };
