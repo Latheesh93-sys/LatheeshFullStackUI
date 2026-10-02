@@ -26,7 +26,6 @@ export class HomeComponent {
   currentBalance:number=0;
   totalExpense: number = 0;
   totalInvestment: number = 0;
-  balance: number = 0;
 
   summaryCards: { label: string; value: number; colorClass: string }[] = [];
 
@@ -78,7 +77,6 @@ this.transactionService.getUserSummary(userId,this.defaultMonth).subscribe({
         this.currentBalance=summary.currentBalance;
         this.totalExpense = summary.totalExpense;
         this.totalInvestment = summary.totalInvestment;
-        this.balance = summary.currentBalance - (this.totalExpense + this.totalInvestment);
         this.topExpenses = summary.topExpenses;
 
         this.SetSummaryCards();
@@ -93,9 +91,9 @@ this.transactionService.getUserSummary(userId,this.defaultMonth).subscribe({
   SetSummaryCards(): void {
     this.summaryCards = [
       { label: 'Income this month', value: this.totalIncome, colorClass: 'text-success' },
-      { label: 'Total Expense', value: this.totalExpense, colorClass: 'text-danger' },
-      { label: 'Total Investment', value: this.totalInvestment, colorClass: 'text-info' },
-      { label: 'Balance', value: this.balance, colorClass: 'text-primary' }
+      { label: 'Expense this month', value: this.totalExpense, colorClass: 'text-danger' },
+      { label: 'Investment this month', value: this.totalInvestment, colorClass: 'text-info' },
+      { label: 'Balance', value: this.currentBalance, colorClass: 'text-primary' }
     ];
   }
 
