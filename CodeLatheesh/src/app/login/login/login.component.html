@@ -28,9 +28,14 @@
       Password is required.
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <button type="submit" [disabled]="loginForm.invalid||isLoading">{{ isLoading ? 'Logging in...' : 'Login' }}</button>
+
+    <p *ngIf="isLoading" class="info-text">
+      Connecting to backend... Initial connection may take up to 30 seconds.
+    </p>
+
      <a  class="nav-link" [routerLink]="['/register']">
             Register
-        </a>
+      </a>
   </form>
 </div>

@@ -19,17 +19,21 @@ export class LoginComponent {
 
   username = '';
   password = '';
+  isLoading = false;
 
   constructor(private auth: AuthService, private router: Router, private toastr:ToastrService) {}
 
   onLogin() {
+    this.isLoading = true;
   this.auth.login(this.username, this.password).subscribe({
     next: (res) => {
+      this.isLoading=false;
       this.auth.saveToken(res);
       this.toastr.success('Login Successful');
       this.router.navigateByUrl('/admin/Home');
     },
     error: () => {
+      this.isLoading=false;
       this.toastr.error('Invalid Username or Password','Login Failed');
     }
   });
