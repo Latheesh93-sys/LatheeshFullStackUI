@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { retry, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,13 @@ export class AuthService {
     return this.http.post<{ token: string }>(`${this.authUrl}/login`, {
       username,
       password
-    });
+    })
+    .pipe(
+      // 1. Wait up to 45 seconds for Azure's cold start
+      timeout(45000),
+      // 2. Automatically retry once if the first request fails due to server spin-up delay
+      retry(1)
+    );
   }
 register(username: string, password: string,firstname:string,lastname:string,email:string) {
     return this.http.post<{ token: string }>(`${this.authUrl}/register`, {
